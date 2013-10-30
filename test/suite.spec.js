@@ -97,4 +97,63 @@ describe('jasmine-intercept', function () {
       expect(intercept.failMessages.length).toBe(1); 
     });    
   });
+  
+  describe('asynchronous test it-erations', function () {
+  
+    it('should pass', function(done) {
+    
+      setTimeout(function () {
+      
+        passing();
+        done();
+        
+      }, 500);    
+      
+    });
+    
+    it('should fail', function(done) {
+      
+      setTimeout(function () {
+      
+        failing();
+        done();
+        
+      }, 500); 
+    });
+    
+    it('should intercept inside timeout', function(done) {
+    
+      setTimeout(function () {
+      
+        intercept();
+        
+        passing();
+        
+        intercept.clear();
+        
+        expect(intercept.passMessages.length).toBe(1);
+        
+        done();
+        
+      }, 500);
+    });
+    
+    it('should intercept when started outside timeout', function(done) {
+      
+      intercept();
+
+      setTimeout(function () {
+      
+        failing('foo', 'bar');
+        
+        intercept.clear();
+        
+        expect(intercept.failMessages.length).toBe(1); 
+        
+        done();
+        
+      }, 500);   
+    });
+        
+  });  
 });

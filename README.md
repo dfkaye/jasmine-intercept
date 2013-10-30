@@ -100,6 +100,6 @@ in testem:
     
 TODO
 ----
-+ at least one asynchronous test
-+ better names for pass/fail message arrays
++ <del>at least one asynchronous test</del>(done)
++ better names for pass/fail message arrays ??
 + NPM publish
