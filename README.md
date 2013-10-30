@@ -75,6 +75,29 @@ Use in beforeEach():
       expect(intercept.failMessages[0]).toBe('Expected ' + a + ' to be ' + b + '.');
     });
     
+    
+jasmine versions supported
+--------------------------
+
+Current implementation runs in both jasmine 1.3.1 and jasmine 2.0.0-rc3.
+
+Using jasmine-node which uses jasmine 1.3.1 internally.
+
+    jasmine-node --verbose ./test/suite.spec.js
+    
+or simply
+
+    npm test
+    
+Using [testemjs](https://github.com/airportyh/testem) to drive tests in multiple 
+browsers for jasmine-2.0.0 (see how to 
+[hack testem for jasmine 2](https://github.com/dfkaye/testem-jasmine2)), as well 
+as jasmine-node.  The following command uses a custom launcher for jasmine-node 
+in testem:
+
+    testem -l jasmine-node
+
+    
 TODO
 ----
 + at least one asynchronous test
