@@ -23,31 +23,52 @@ Call `intercept.clear()` to turn off capturing.
 Inspect `intercept.failMessages` and `intercept.passMessages` arrays for length 
 and content.
 
-example
--------
+examples
+--------
+
+Use in each it-eration:
+
+    it('should capture spec message', function () {
+
+      var a = 1, b = 2;
+      
+      intercept();  // turn it on..
+      
+      expect(a).toBe(b); // this will be captured...
+      
+      expect(typeof intercept).toBe('function'); // ...so will this
+
+      intercept.clear();  // turn it off
+      
+      // now use real expectation to inspect messages
+      
+      expect(intercept.failMessages.length).toBe(1);
+      expect(intercept.failMessages[0]).toBe('Expected ' + a + ' to be ' + b + '.');
+      expect(intercept.passMessages.length).toBe(1);
+    });
+    
+Use in beforeEach():
 
     /*
      * set up and run tests
      */
      
     beforeEach(function() {
-
+    
       intercept();
       
     });
-
-    it('should capture failing spec message', function () {
-
-      var a = 1;
-      var b = 2;
+    
+    if ('should work', function () {
+    
+      var a = 1, b = 2;
+            
+      expect(a).toBe(b); // this will be captured...
       
-      // this will be captured
-      expect(a).toBe(b);
+      intercept.clear();  // turn it off
       
-      // turn off the interceptor for this it-eration
-      intercept.clear();
+      // now use real expectation to inspect messages
       
-      // call real expectation
+      expect(intercept.failMessages.length).toBe(1);
       expect(intercept.failMessages[0]).toBe('Expected ' + a + ' to be ' + b + '.');
     });
-    

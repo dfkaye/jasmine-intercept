@@ -13,19 +13,6 @@
   }
 
   /*
-   * set up vars for each iteration first
-   */
-  var currentSpec;
-  var result;
-  
-  var passMessages;
-  var failMessages;
-
-  var addResult;
-  var addExpectationResult;
-  var clear;
-
-  /*
    * GLOBAL INTERCEPT GRABS IT OFF THE JAZZ ENVIRONMENT
    */
   function intercept() {
@@ -33,16 +20,29 @@
   };
   
   /*
+   * Main api method defined on the jazz environment in imitation of the jasmine lib src.
    *
-   */
+   * Set up an interceptor for add-results methods.
+   *
+   * Call intercept.clear() to un-set these before expect() calls after the intercepted
+   * block.
+   */   
   jasmine.getEnv().constructor.prototype.intercept = function() {
   
-    /* 
-     *  Set up an interceptor for add-results methods.
-     *  Call intercept.clear() to un-set these before expect() calls after the intercepted
-     *  block.
+    /*
+     * set up vars for each iteration first
      */
-     
+    var currentSpec;
+    var result;
+    
+    var passMessages;
+    var failMessages;
+
+    var addResult;
+    var addExpectationResult;
+    var clear;
+    
+
     currentSpec = jasmine.getEnv().currentSpec;
 
     result = /* jasmine 2.x.x. */ currentSpec.result || 
