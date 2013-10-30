@@ -1,5 +1,10 @@
 // jasmine-intercept.js
-
+// david kaye (@dfkaye)
+// 30 Oct 2103
+//
+// Provides an `intercept()` method for the Jasmine BDD test framework, in order to 
+// capture *expected* failures and report them as passed to the jasmine reporter, mainly 
+// as a shield for continuous integration environments.
 
 (function() {
   
@@ -34,15 +39,12 @@
      */
     var currentSpec;
     var result;
-    
     var passMessages;
     var failMessages;
-
-    var addResult;
-    var addExpectationResult;
+    var addResult; /* jasmine 1.x.x. */
+    var addExpectationResult; /* jasmine 2.x.x. */
     var clear;
     
-
     currentSpec = jasmine.getEnv().currentSpec;
 
     result = /* jasmine 2.x.x. */ currentSpec.result || 
@@ -84,7 +86,5 @@
     intercept.clear = clear;
     intercept.failMessages = failMessages;
     intercept.passMessages = passMessages;
-
   }
-  
 }());

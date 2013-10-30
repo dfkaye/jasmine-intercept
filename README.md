@@ -2,7 +2,9 @@ jasmine-intercept
 =================
 
 Provides an `intercept()` method for the 
-[Jasmine BDD test framework](https://github.com/pivotal/jasmine).
+[Jasmine BDD test framework](https://github.com/pivotal/jasmine), in order to 
+capture *expected* failures and report them as passed to the jasmine reporter, 
+mainly as a shield for continuous integration environments.
 
 justify
 -------
@@ -72,3 +74,9 @@ Use in beforeEach():
       expect(intercept.failMessages.length).toBe(1);
       expect(intercept.failMessages[0]).toBe('Expected ' + a + ' to be ' + b + '.');
     });
+    
+TODO
+----
++ at least one asynchronous test
++ better names for pass/fail message arrays
++ NPM publish
