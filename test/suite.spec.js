@@ -16,48 +16,7 @@ describe('jasmine-intercept', function () {
 
   function failing(a, b) {
     expect(a).toBe(b);
-  };
-  
-  
-  describe('used in beforeEach()', function() {
-  
-    /*
-     * set up and run tests
-     */
-     
-    beforeEach(function() {
-      intercept();
-    });
-
-    it('should be available as a function', function () {
-      intercept.clear();
-      expect(typeof intercept).toBe('function');
-    });
-
-    it('should capture passing spec', function () {
-      passing();
-      intercept.clear();
-      expect(intercept.passMessages.length).toBe(1);
-    });
-    
-    it('should capture failing spec', function () {
-      failing(1, 0);
-      intercept.clear();
-      expect(intercept.failMessages.length).toBe(1);
-    });
-
-    it('should capture failing spec message', function () {
-
-      var a = 1;
-      var b = 2;
-      
-      failing(1, 2);
-      intercept.clear();
-      expect(intercept.failMessages[0]).toBe('Expected ' + a + ' to be ' + b + '.');
-    });
-  
-  });
-  
+  }; 
   
   describe('used in it-erations', function () {
   
@@ -69,36 +28,55 @@ describe('jasmine-intercept', function () {
       failing();
     });
     
-    it('should intercept pass', function() {
-      intercept();
-      passing();
-      intercept.clear();
-      expect(intercept.passMessages.length).toBe(1);
+    it('should throw when param is not a function', function() {
+    
+      expect(function () {
+        intercept();
+      }).toThrow();
+      
     });
     
-    it('should intercept fail', function() {
-      intercept();
-      failing(1, 0);
-      intercept.clear();
-      expect(intercept.failMessages.length).toBe(1);      
+    it('should intercept passing messages', function() {
+      var messages = intercept(passing);
+      
+      expect(messages.passing.length).toBe(1);
     });
     
-    it('should intercept in multiple setup and clear steps', function() {
-      intercept();
-      failing(1, 0);
-      intercept.clear();
-      expect(intercept.failMessages.length).toBe(1); 
+    it('should intercept failing messages', function() {
+      var messages = intercept(function() {
+        failing(1, 0);
+      });
+      expect(messages.failing.length).toBe(1);      
+    });
+    
+    it('should intercept multiple times in one step definition', function() {
+    
+      var messages = intercept(function() {
+        failing(1, 0);
+      });
+      expect(messages.failing.length).toBe(1); 
+           
+      var messages2 = intercept(function() {
+        failing(33, 45);
+      });
+      expect(messages2.failing.length).toBe(1); 
+    });
+    
+    it('should intercept passing and failing messages', function () {
+    
+      var messages = intercept(function() {
+        expect(1).toBe(1);
+        expect(typeof drink).toBe('mixed'); // should be 'undefined'
+      });
       
-      // not recommended but can be done without side-effects
-      
-      intercept();
-      failing(33, 45);
-      intercept.clear();
-      expect(intercept.failMessages.length).toBe(1); 
-    });    
+      expect(messages.failing.length).toBe(1);
+      expect(messages.failing[0]).toBe("Expected 'undefined' to be 'mixed'.");
+      expect(messages.passing.length).toBe(1);
+    });
+    
   });
   
-  describe('asynchronous test it-erations', function () {
+  describe('asynchronous it-erations', function () {
   
     it('should pass', function(done) {
     
@@ -121,39 +99,52 @@ describe('jasmine-intercept', function () {
       }, 500); 
     });
     
-    it('should intercept inside timeout', function(done) {
+    it('should intercept passing messages', function(done) {
     
       setTimeout(function () {
       
-        intercept();
-        
-        passing();
-        
-        intercept.clear();
-        
-        expect(intercept.passMessages.length).toBe(1);
+        var messages = intercept(passing);
+               
+        expect(messages.passing.length).toBe(1);
         
         done();
         
       }, 500);
     });
     
-    it('should intercept when started outside timeout', function(done) {
+    it('should intercept failing messages', function(done) {
       
-      intercept();
-
       setTimeout(function () {
       
-        failing('foo', 'bar');
+        var messages = intercept(function() {
         
-        intercept.clear();
+          failing('foo', 'bar');
         
-        expect(intercept.failMessages.length).toBe(1); 
+        });
+        
+        expect(messages.failing.length).toBe(1); 
         
         done();
         
       }, 500);   
     });
+    
+    it('should intercept passing and failing messages', function (done) { // <= pass done here
+    
+      setTimeout(function () {
+      
+        var messages = intercept(function() {
+          expect(1).toBe(1);
+          expect(typeof drink).toBe('mixed'); // should be 'undefined'
+        });
         
+        expect(messages.failing.length).toBe(1);
+        expect(messages.failing[0]).toBe("Expected 'undefined' to be 'mixed'.");
+        expect(messages.passing.length).toBe(1);
+        
+        done(); // <= call done here
+        
+      }, 500);
+    });
   });  
 });

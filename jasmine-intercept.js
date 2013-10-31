@@ -20,27 +20,32 @@
   /*
    * GLOBAL INTERCEPT GRABS IT OFF THE JAZZ ENVIRONMENT
    */
-  function intercept() {
-    return jasmine.getEnv().intercept();
+  function intercept(fn) {
+    return jasmine.getEnv().intercept(fn);
   };
   
   /*
    * Main api method defined on the jazz environment in imitation of the jasmine lib src.
    *
-   * Set up an interceptor for add-results methods.
+   * intercept takes a function param, sets up interception of jasmine's addResult and 
+   * and addExpectationResult methods, and populates passing and failing arrays with the 
+   * generated results messages.
    *
-   * Call intercept.clear() to un-set these before expect() calls after the intercepted
-   * block.
+   * returns a results object containing to the passing and failing message arrays.
    */   
-  jasmine.getEnv().constructor.prototype.intercept = function() {
-  
+  jasmine.getEnv().constructor.prototype.intercept = function(fn) {
+
+    if (typeof fn != 'function') {
+      throw new Error('intercept() param expected to be a function but was ' + typeof fn);
+    }
+    
     /*
      * set up vars for each iteration first
      */
     var currentSpec;
     var result;
-    var passMessages;
-    var failMessages;
+    var passing;
+    var failing;
     var addResult; /* jasmine 1.x.x. */
     var addExpectationResult; /* jasmine 2.x.x. */
     var clear;
@@ -50,16 +55,16 @@
     result = /* jasmine 2.x.x. */ currentSpec.result || 
              /* jasmine 1.x.x. */ currentSpec.results_;
                  
-    passMessages = [];
-    failMessages = [];
+    passing = [];
+    failing = [];
 
     /* jasmine 1.x.x. */
     addResult = result.addResult;
     result.addResult = function (results) {
       if (results.trace) {
-        failMessages.push(results.message);
+        failing.push(results.message);
       } else {
-        passMessages.push(results.message);
+        passing.push(results.message);
         addResult.call(result, results);
       }
     }
@@ -68,9 +73,9 @@
     addExpectationResult = currentSpec.addExpectationResult;
     currentSpec.addExpectationResult = function (passed, data) {
       if (!passed) {
-        failMessages.push(data.message);
+        failing.push(data.message);
       } else {
-        passMessages.push(data.message);
+        passing.push(data.message);
         addExpectationResult.call(passed, data);
       }          
     };
@@ -80,11 +85,13 @@
       currentSpec.addExpectationResult = addExpectationResult;
     };
     
-    /*
-     * Each invocation of intercept() resets these
-     */
-    intercept.clear = clear;
-    intercept.failMessages = failMessages;
-    intercept.passMessages = passMessages;
+    fn();
+    
+    clear();
+    
+    return {
+      failing: failing,
+      passing: passing
+    }
   }
 }());
