@@ -102,9 +102,3 @@ npm
 
     npm install jasmine-intercept
     
-TODO
-----
-+ <del>at least one asynchronous test</del>(done)
-+ <del>better names for pass/fail message arrays</del>
-+ <del>better usable api</del>
-+ <del>NPM publish</del>
