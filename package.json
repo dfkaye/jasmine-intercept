@@ -10,6 +10,7 @@
   "devDependencies": {
     "jasmine-node": "~1.0.0"
   },
+  "main": "./jasmine-intercept.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/dfkaye/jasmine-intercept.git"

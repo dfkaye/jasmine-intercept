@@ -7,7 +7,7 @@
 // as a shield for continuous integration environments.
 
 (function() {
-  
+
   /*
    * EXPORT JAZZ
    */  
