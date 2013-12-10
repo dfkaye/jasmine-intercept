@@ -1,6 +1,8 @@
 jasmine-intercept
 =================
 
+[![Build Status](https://travis-ci.org/dfkaye/jasmine-intercept.png)](https://travis-ci.org/dfkaye/jasmine-intercept)
+
 Provides an `intercept()` method for the 
 [Jasmine BDD test framework](https://github.com/pivotal/jasmine), in order to 
 capture *expected* failures and report them as passed to the jasmine reporter, 

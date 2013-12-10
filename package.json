@@ -1,6 +1,6 @@
 {
   "name": "jasmine-intercept",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "intercept jasmine spec results to prevent expected failures appearing as failed in the reporter",
   "homepage" : "https://github.com/dfkaye/jasmine-intercept",
   "author": {
@@ -8,7 +8,7 @@
     "email" : "dfkaye@yahoo.com"
   },
   "devDependencies": {
-    "jasmine-node": "~1.0.0"
+    "jasmine-node": "1.x.x"
   },
   "license": "MIT",
   "main": "./jasmine-intercept.js",
