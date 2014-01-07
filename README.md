@@ -62,8 +62,6 @@ examples
 
 Use in an it-eration:
 
-    var intercept = jasmine.getEnv().intercept;
-
     it('should intercept messages', function () {
           
       var messages = intercept(function() {
@@ -78,8 +76,6 @@ Use in an it-eration:
 
     
 Use in asynchronous it-eration:  
-    
-    var intercept = jasmine.getEnv().intercept;
     
     it('should intercept asynchronous messages', function (done) { // <= pass done here
     
