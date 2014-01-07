@@ -1,6 +1,6 @@
 {
   "name": "jasmine-intercept",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "intercept jasmine spec results to prevent expected failures appearing as failed in the reporter",
   "homepage" : "https://github.com/dfkaye/jasmine-intercept",
   "author": {
