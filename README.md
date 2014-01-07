@@ -73,8 +73,7 @@ Use in an it-eration:
       expect(messages.failing[0]).toBe("Expected 'undefined' to be 'mixed'.");
       expect(messages.passing.length).toBe(1);
     });
-
-    
+  
 Use in asynchronous it-eration:  
     
     it('should intercept asynchronous messages', function (done) { // <= pass done here
@@ -95,8 +94,7 @@ Use in asynchronous it-eration:
       }, 500);
       
     });
-    
-    
+
 jasmine versions supported
 --------------------------
 
@@ -110,6 +108,16 @@ or simply
 
     npm test
     
+rawgithub test page
+-------------------
+
+__The *jasmine2* browser test page is viewable on 
+<a href='//rawgithub.com/dfkaye/jasmine-intercept/master/test/browser-suite.html' 
+   target='_new' title='opens in new tab or window'>rawgithub</a>.__
+   
+testem
+------
+
 Using [testemjs](https://github.com/airportyh/testem) to drive tests in multiple 
 browsers for jasmine-2.0.0 (see how to 
 [hack testem for jasmine 2](https://github.com/dfkaye/testem-jasmine2)), as well 
