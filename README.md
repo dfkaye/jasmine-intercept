@@ -19,13 +19,27 @@ tl;dr ~ needed this while using jasmine to test-drive my
 
 Read [more about that here](https://gist.github.com/dfkaye/7223559).
 
+npm
+---
+
+    npm install jasmine-intercept
+    
+    git clone https://github.com/dfkaye/jasmine-intercept.git
 
 important
 ---------
 
 Including or requiring `jasmine-intercept` adds an `intercept()` method to the 
-**global** namespace.
+**global** environment, for example:
 
+    require('jasmine-intercept');
+    
+    intercept === global.intercept === jasmine.getEnv().intercept;
+
+    <script -- jasmine 1 or 2 scripts first -->
+    <script src="../jasmine-intercept.js"></script>
+
+    intercept === window.intercept === jasmine.getEnv().intercept;
 
 use
 ---
@@ -48,8 +62,10 @@ examples
 
 Use in an it-eration:
 
+    var intercept = jasmine.getEnv().intercept;
+
     it('should intercept messages', function () {
-    
+          
       var messages = intercept(function() {
         expect(1).toBe(1);
         expect(typeof drink).toBe('mixed'); // should be 'undefined'
@@ -62,6 +78,8 @@ Use in an it-eration:
 
     
 Use in asynchronous it-eration:  
+    
+    var intercept = jasmine.getEnv().intercept;
     
     it('should intercept asynchronous messages', function (done) { // <= pass done here
     
@@ -102,10 +120,5 @@ browsers for jasmine-2.0.0 (see how to
 as jasmine-node.  The following command uses a custom launcher for jasmine-node 
 in testem:
 
-    testem -l jasmine-node
-
-npm
----
-
-    npm install jasmine-intercept
-    
+    testem -l j
+ 

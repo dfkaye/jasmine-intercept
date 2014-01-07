@@ -5,7 +5,7 @@ if (typeof require == 'function') {
 }
 
 describe('jasmine-intercept', function () {
-
+  
   /*
    * fixture methods
    */
@@ -37,34 +37,43 @@ describe('jasmine-intercept', function () {
     });
     
     it('should intercept passing messages', function() {
+    
       var messages = intercept(passing);
       
       expect(messages.passing.length).toBe(1);
     });
     
     it('should intercept failing messages', function() {
+    
       var messages = intercept(function() {
+      
         failing(1, 0);
       });
+      
       expect(messages.failing.length).toBe(1);      
     });
     
     it('should intercept multiple times in one step definition', function() {
     
       var messages = intercept(function() {
+      
         failing(1, 0);
       });
+      
       expect(messages.failing.length).toBe(1); 
            
       var messages2 = intercept(function() {
+      
         failing(33, 45);
       });
+      
       expect(messages2.failing.length).toBe(1); 
     });
     
     it('should intercept passing and failing messages', function () {
     
       var messages = intercept(function() {
+      
         expect(1).toBe(1);
         expect(typeof drink).toBe('mixed'); // should be 'undefined'
       });
@@ -134,6 +143,7 @@ describe('jasmine-intercept', function () {
       setTimeout(function () {
       
         var messages = intercept(function() {
+        
           expect(1).toBe(1);
           expect(typeof drink).toBe('mixed'); // should be 'undefined'
         });

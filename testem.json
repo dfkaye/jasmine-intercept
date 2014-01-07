@@ -5,7 +5,7 @@
     "./test/*.js"
   ],
   "launchers": {
-    "jasmine-node": {
+    "j": {
       "command": "jasmine-node --verbose ./test/suite.spec.js"
     }
   }  
