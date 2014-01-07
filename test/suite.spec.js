@@ -18,6 +18,18 @@ describe('jasmine-intercept', function () {
     expect(a).toBe(b);
   }; 
   
+  /*
+   * smoke tests
+   */
+  
+  it('should be on jasmine env', function() {
+    expect(typeof jasmine.getEnv().intercept).toBe('function');
+  });
+  
+  it('should be global', function() {
+    expect(typeof intercept).toBe('function');
+  });
+  
   describe('used in it-erations', function () {
   
     it('should pass', function() {
