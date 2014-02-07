@@ -1,7 +1,11 @@
-jasmine-intercept
-=================
+# DEPRECATION NOTICE [7 JAN 2014]
+
+__jasmine-intercept has been superseded by [where.js](https://github.com/dfkaye/where.js)__
 
 [![Build Status](https://travis-ci.org/dfkaye/jasmine-intercept.png)](https://travis-ci.org/dfkaye/jasmine-intercept)
+
+jasmine-intercept
+=================
 
 Provides an `intercept()` method for the 
 [Jasmine BDD test framework](https://github.com/pivotal/jasmine), in order to 
